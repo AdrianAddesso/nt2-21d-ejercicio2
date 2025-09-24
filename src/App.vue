@@ -1,8 +1,7 @@
 <template>
     <div class="container-fluid mt-3" id="app">
         <main>
-            <Buscador/>
-            <img style ="margin-top: 200px;" src="https://content.imageresizer.com/images/memes/cheems-meme-3nzkub.png" width="100px"></img>
+            <Buscador/>            
         </main>
     </div>
 </template>
