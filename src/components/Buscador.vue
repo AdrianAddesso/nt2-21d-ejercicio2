@@ -6,25 +6,18 @@
     </div>
     <div class="row">
         <div class="col-4">
+            <div v-show="cantCharsNombre" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
             <h4>🔎 Busqueda por Nombre y/o Apellido
                 <span class="bi bi-info-circle-fill text-muted ms-0" id="tt-nombre" data-bs-toggle="tooltip" data-bs-placement="right" title="Ingresá parte del nombre o apellido para buscar.">🛈</span>
             </h4>
             <input type="text" class="form-control" v-model.trim="busquedaPorNombre" placeholder="Ingresar nombre a buscar..."></input>
-            
+            <div v-show="cantCharsNombre" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
         </div>
         <div class="col-4">
             <h4>🔎 Busqueda por DNI
                 <span class="bi bi-info-circle-fill text-muted ms-0" id="tt-nombre" data-bs-toggle="tooltip" data-bs-placement="right" title="Ingresá el DNI sin puntos ni comas.">🛈</span>
             </h4>
             <input type="text" class="form-control" v-model.trim="busquedaPorDni" placeholder="Ingresar DNI a buscar..."></input>
-            
-        </div>
-    </div>
-    <div class="row">
-        <div class=" col-4">
-            <div v-show="cantCharsNombre" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
-        </div>
-        <div class=" col-4">
             <div v-show="cantCharDni" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
         </div>
     </div>
@@ -115,11 +108,10 @@ export default {
 </script>
 
 <style scoped>
-input, h4, #card-container{
+input, h4, #card-container,.alert{
     margin-left: 15px;
     margin-bottom: 15px;
 }
-
 
 h1 {
     margin-left: 15px;
