@@ -20,7 +20,7 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-3" >
-        <div id="card-container" class="col-4" v-for="persona in personasRetornadas" :key="persona.dni">
+        <div id="card-container" class="col-4" v-for="persona in personasFiltradas" :key="persona.dni">
             <div class="card h-100" style="padding-left:0px">
                 <div class="card-body">
                     <h5 class="card-title">{{ getNombreCompleto(persona) }}</h5>
@@ -30,9 +30,9 @@
             </div>
         </div>
     </div>
-    <div>
+    <!--<div>
         <img style ="margin-top: 100px" :src="imagenDogo()" width="150px"></img>
-    </div>
+    </div>-->
 </template>
 
 
@@ -43,7 +43,6 @@ export default {
         return {
             busquedaPorNombre: '',
             busquedaPorDni: '',
-            resultadoBusqueda: [],
             //Aquí, en este array es donde tienen que agregar su información
             personas: [
                 {
@@ -82,38 +81,28 @@ export default {
         }
     },
     computed: {
-        isEmpty(valor){
-            return valor === ''
-        },
-        personasRetornadas(){
-            if(!this.isEmpty(this.busquedaPorNombre)){
-                this.personasFiltradas(this.busquedaPorNombre)
-            }
-            if(!this.isEmpty(this.busquedaPorDni)){
-                this.personasFiltradas(this.busquedaPorDni)
-            }
-            return this.resultadoBusqueda;
-        },
+        personasFiltradas() {
+            const filtroNombre = this.busquedaPorNombre.toLowerCase();
+            const filtroDni = this.busquedaPorDni;
 
-        //me fijo si estan empty
-        // si no estan empty, traigo un array con personasFiltradas
-        //comparo los arrays y devuelvo 1 solo array
-
-        personasFiltradas(valorABuscar) {
-            const personaAux = this.personas.filter((persona) => {
-                let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
-                return registroCompleto.toLowerCase().includes(this.valorABuscar.toLowerCase())
+            if (filtroNombre === '' && filtroDni === '') {
+                return [];
+            }
+        return this.personas.filter((persona) => {
+            const registroNombre = `${persona.nombre} ${persona.apellido}`.toLowerCase();
+            const coincideNombre = filtroNombre === '' || registroNombre.includes(filtroNombre);
+            const coincideDni = filtroDni === '' || persona.dni.includes(filtroDni);
+            return coincideNombre && coincideDni;
             });
-            return this.resultadoBusqueda.find(this.personaAux)?[]:this.resultadoBusqueda.push(this.personaAux)
         }
     },
         methods: {
             getNombreCompleto(persona) {
                 return `${persona.nombre} ${persona.apellido}`
             },
-            imagenDogo(){
-                return this.resultadoBusqueda != [] ? this.dogoFeliz: this.dogoTriste;
-            }
+            /*imagenDogo(){
+                return this.criterioDeBusqueda.trim() !== '' ? this.dogoFeliz: this.dogoTriste;
+            }*/
         }
     }
 </script>
