@@ -14,7 +14,7 @@ el resultado tiene que ser excluyente.
 * [x] Disponer de un cartel maquetado con Bootstrap (puede ser un alert) debajo de los filtros que
 sólo muestre como advertencia cuando el usuario no haya ingresado al menos 3 caracteres
 en alguno de los filtros.
-* [ ] Subir la solución al repositorio remoto propio.
+* [x] Subir la solución al repositorio remoto propio.
 
 > Enviar por mail el link al repo de cada uno de ustedes con el ejercicio resuelto.
 
