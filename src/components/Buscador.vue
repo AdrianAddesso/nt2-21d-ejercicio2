@@ -10,12 +10,14 @@
                 <span class="bi bi-info-circle-fill text-muted ms-0" id="tt-nombre" data-bs-toggle="tooltip" data-bs-placement="right" title="Ingresá parte del nombre o apellido para buscar.">🛈</span>
             </h4>
             <input type="text" class="form-control" v-model.trim="busquedaPorNombre" placeholder="Ingresar nombre a buscar..."></input>
+            <div v-show="cantCharsNombre" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
         </div>
         <div class="col-4">
             <h4>🔎 Busqueda por DNI
                 <span class="bi bi-info-circle-fill text-muted ms-0" id="tt-nombre" data-bs-toggle="tooltip" data-bs-placement="right" title="Ingresá el DNI sin puntos ni comas.">🛈</span>
             </h4>
             <input type="text" class="form-control" v-model.trim="busquedaPorDni" placeholder="Ingresar DNI a buscar..."></input>
+            <div v-show="cantCharDni" class="alert alert-danger" role="alert">{{textoAlerta}}</div>
         </div>
     </div>
 
@@ -30,9 +32,6 @@
             </div>
         </div>
     </div>
-    <!--<div>
-        <img style ="margin-top: 100px" :src="imagenDogo()" width="150px"></img>
-    </div>-->
 </template>
 
 
@@ -43,7 +42,7 @@ export default {
         return {
             busquedaPorNombre: '',
             busquedaPorDni: '',
-            //Aquí, en este array es donde tienen que agregar su información
+            textoAlerta:"Ingrese al menos 3 caracteres",
             personas: [
                 {
                     nombre: "Lucia",
@@ -65,8 +64,8 @@ export default {
                 },
                 {
                     nombre: "Federico",
-                    apellido: "Diaz",
-                    correo: "f.diaz@gmail.com",
+                    apellido: "Ramirez",
+                    correo: "f.Ramirez@gmail.com",
                     dni: "66778899"
                 },
                 {
@@ -76,8 +75,6 @@ export default {
                     dni: "77889900"
                 },
             ],
-            dogoFeliz: "https://i.pinimg.com/736x/04/7b/54/047b5491771ba7d54b33179e04164b22.jpg",
-            dogoTriste: "https://content.imageresizer.com/images/memes/cheems-meme-3nzkub.png",
         }
     },
     computed: {
@@ -85,7 +82,7 @@ export default {
             const filtroNombre = this.busquedaPorNombre.toLowerCase();
             const filtroDni = this.busquedaPorDni;
 
-            if (filtroNombre === '' && filtroDni === '') {
+            if ((filtroNombre === '' || this.cantCharsNombre) && (filtroDni === '' || this.cantCharDni)) {
                 return [];
             }
         return this.personas.filter((persona) => {
@@ -94,27 +91,37 @@ export default {
             const coincideDni = filtroDni === '' || persona.dni.includes(filtroDni);
             return coincideNombre && coincideDni;
             });
+        },
+        cantCharsNombre(){
+            return this.busquedaPorNombre.length > 0 && this.busquedaPorNombre.length < 3
+        },
+        cantCharDni(){
+            return this.busquedaPorDni.length > 0 && this.busquedaPorDni.length < 3
         }
     },
         methods: {
             getNombreCompleto(persona) {
                 return `${persona.nombre} ${persona.apellido}`
             },
-            /*imagenDogo(){
-                return this.criterioDeBusqueda.trim() !== '' ? this.dogoFeliz: this.dogoTriste;
-            }*/
         }
     }
 </script>
 
 <style scoped>
-input, h4, #card-container {
+input, h4, #card-container{
     margin-left: 15px;
     margin-bottom: 15px;
 }
 
+
 h1 {
     margin-left: 15px;
     margin-bottom: 35px
+}
+.alert {
+    margin-left: 15px;
+    margin-bottom: 15px;
+    border-color: none;
+    padding: 8px 8px 8px 8px;
 }
 </style>
